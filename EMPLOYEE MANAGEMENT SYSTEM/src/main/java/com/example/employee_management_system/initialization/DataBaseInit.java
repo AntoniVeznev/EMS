@@ -13,14 +13,16 @@ public class DataBaseInit implements CommandLineRunner {
     private final PositionService positionService;
     private final RoleService roleService;
     private final UserService userService;
+    private final EmployeeService employeeService;
 
-    public DataBaseInit(DepartmentService departmentService, HoursService hoursService, LocationService locationService, PositionService positionService, RoleService roleService, UserService userService) {
+    public DataBaseInit(DepartmentService departmentService, HoursService hoursService, LocationService locationService, PositionService positionService, RoleService roleService, UserService userService, EmployeeService employeeService) {
         this.departmentService = departmentService;
         this.hoursService = hoursService;
         this.locationService = locationService;
         this.positionService = positionService;
         this.roleService = roleService;
         this.userService = userService;
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -31,5 +33,6 @@ public class DataBaseInit implements CommandLineRunner {
         positionService.initPosition();
         roleService.initRoles();
         userService.initUsers();
+        employeeService.initEmployees();
     }
 }

@@ -21,8 +21,19 @@ public class Employee extends BaseEntity {
     private Position position;
     private Location location;
     private Hours hours;
+    private Role role;
 
     public Employee() {
+    }
+
+    @OneToOne
+    public Role getRole() {
+        return role;
+    }
+
+    public Employee setRole(Role role) {
+        this.role = role;
+        return this;
     }
 
     public String getName() {
