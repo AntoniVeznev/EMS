@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/commons::head}"></head>
+<body class="index bg-dark border-bottom border-body" >
+
+<nav th:replace="~{fragments/commons::navigation}"></nav>
+
+<div class="container text-center w-25 pt-5">
+    <div class="row row-cols-3 row-cols-lg-1 g-2 g-lg-3">
+
+        <button type="button" class="btn btn-primary">All Departments</button>
+        <button type="button" class="btn btn-primary">All Employees</button>
+
+
+    </div>
+</div>
+
+
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+<script th:replace="~{fragments/commons::script}"></script>
+
+</body>
+</html>

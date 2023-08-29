@@ -27,11 +27,6 @@ spring:
       filter:
         enabled: true
 
-  #Cloudinary Properties
-  cloudinary:
-    api-key: 459979215534265
-    api-secret: _wgmjJfOu9W3dACZwn4MD-5A4yI
-    cloud-name: dedh1hh8k
 
   #Passwords for the first 2 users that are auto initialized in the DataBase: Admin and User
   STAR_WARS_PROJECT:
