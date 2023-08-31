@@ -2,6 +2,7 @@ package com.example.employee_management_system.model.entity.enums;
 
 public enum PositionNameEnum {
     CEO,
+    ADMIN_MANAGER,
     PRODUCT_LEAD,
     PRODUCT_MANAGER,
     BDR_MANAGER,
@@ -13,6 +14,5 @@ public enum PositionNameEnum {
     MEDIUM_DEVELOPER,
     JUNIOR_DEVELOPER,
     DESIGN_LEAD,
-    SALES_MANAGER,
-    ASSISTANT
+    SALES_MANAGER
 }

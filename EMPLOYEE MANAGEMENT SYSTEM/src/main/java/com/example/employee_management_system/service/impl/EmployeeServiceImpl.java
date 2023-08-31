@@ -79,8 +79,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .setBirthday(LocalDate.of(1985, 6, 6))
                 .setHiredOn(LocalDate.of(2010, 4, 4))
                 .setMobilePhone("0884674523")
-                .setPosition(positionRepository.findById(14L).orElseThrow())
-                .setDepartment(departmentRepository.findById(7L).orElseThrow())
+                .setPosition(positionRepository.findById(2L).orElseThrow())
+                .setDepartment(departmentRepository.findById(2L).orElseThrow())
                 .setAddress(address);
         employeeRepository.save(employee);
     }
