@@ -13,5 +13,6 @@ public enum PositionNameEnum {
     MEDIUM_DEVELOPER,
     JUNIOR_DEVELOPER,
     DESIGN_LEAD,
-    SALES_MANAGER
+    SALES_MANAGER,
+    ASSISTANT
 }

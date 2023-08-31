@@ -38,9 +38,11 @@ public class ApplicationUserDetailServiceImpl implements UserDetailsService {
     }
 
     private List<GrantedAuthority> extractAuthorities(User user) {
-        List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(mapRole(user.getRole()));
-        return authorityList;
+        return user
+                .getRoles()
+                .stream()
+                .map(this::mapRole)
+                .toList();
     }
 
     private GrantedAuthority mapRole(Role role) {

@@ -1,52 +1,73 @@
 package com.example.employee_management_system.service.impl;
 
 import com.example.employee_management_system.model.entity.User;
+import com.example.employee_management_system.repository.EmployeeRepository;
 import com.example.employee_management_system.repository.RoleRepository;
 import com.example.employee_management_system.repository.UserRepository;
 import com.example.employee_management_system.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final EmployeeRepository employeeRepository;
+    private final String defaultPasswordForBoss;
+    private final String defaultPasswordForModerator;
+    private final String defaultPasswordForEmployee;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, EmployeeRepository employeeRepository,
+                           @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.boss.defaultPasswordForBoss}") String bossPassword,
+                           @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.moderator.defaultPasswordForModerator}") String moderatorPassword,
+                           @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.employee.defaultPasswordForEmployee}") String employeePassword) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.employeeRepository = employeeRepository;
+        this.defaultPasswordForBoss = bossPassword;
+        this.defaultPasswordForModerator = moderatorPassword;
+        this.defaultPasswordForEmployee = employeePassword;
     }
 
     @Override
     public void initUsers() {
-
         if (userRepository.count() > 0) {
             return;
         }
+        initDefaultAdmin();
+        initDefaultModerator();
+        initDefaultUser();
+    }
 
-        User bossUser = new User();
-        User moderatorUser = new User();
+    private void initDefaultUser() {
         User user = new User();
-
-        bossUser
-                .setUsername("Boss")
-                .setPassword("bosspassword")
-                .setRole(roleRepository.findById(1L).orElseThrow());
-        userRepository.save(bossUser);
-
-
-        moderatorUser
-                .setUsername("Moderator")
-                .setPassword("moderatorpassword")
-                .setRole(roleRepository.findById(2L).orElseThrow());
-        userRepository.save(moderatorUser);
-
-        user
+        user.setEmployee(employeeRepository.findById(3L).orElseThrow())
                 .setUsername("User")
-                .setPassword("userpassword")
-                .setRole(roleRepository.findById(3L).orElseThrow());
+                .setPassword(passwordEncoder.encode(defaultPasswordForEmployee))
+                .setRoles(roleRepository.findById(3L).stream().toList());
         userRepository.save(user);
+    }
 
+    private void initDefaultModerator() {
+        User moderatorUser = new User();
+        moderatorUser
+                .setEmployee(employeeRepository.findById(2L).orElseThrow())
+                .setUsername("Moderator")
+                .setPassword(passwordEncoder.encode(defaultPasswordForModerator))
+                .setRoles(roleRepository.findById(2L).stream().toList());
+        userRepository.save(moderatorUser);
+    }
+
+    private void initDefaultAdmin() {
+        User bossUser = new User();
+        bossUser
+                .setEmployee(employeeRepository.findById(1L).orElseThrow())
+                .setUsername("Boss")
+                .setPassword(passwordEncoder.encode(defaultPasswordForBoss))
+                .setRoles(roleRepository.findById(1L).stream().toList());
+        userRepository.save(bossUser);
     }
 }

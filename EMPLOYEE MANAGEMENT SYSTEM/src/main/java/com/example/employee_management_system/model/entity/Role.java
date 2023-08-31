@@ -6,10 +6,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "roles")
 public class Role extends BaseEntity {
-
     private RoleNameEnum role;
 
     public Role() {
+
     }
 
     @Enumerated(EnumType.STRING)

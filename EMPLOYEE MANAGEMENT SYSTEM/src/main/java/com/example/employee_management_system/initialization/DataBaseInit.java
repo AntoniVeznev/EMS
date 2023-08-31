@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DataBaseInit implements CommandLineRunner {
-
     private final DepartmentService departmentService;
     private final HoursService hoursService;
     private final LocationService locationService;
@@ -32,7 +31,7 @@ public class DataBaseInit implements CommandLineRunner {
         locationService.initLocation();
         positionService.initPosition();
         roleService.initRoles();
+        employeeService.initEmployee();
         userService.initUsers();
-        employeeService.initEmployees();
     }
 }
