@@ -25,16 +25,33 @@
 <nav th:fragment="navigation">
     <nav class="navbar container-fluid">
         <form class="container-fluid justify-content-center bg-dark pb-5 pt-3">
-            <button class="btn btn-outline-info me-2" type="button">Admin</button>
-            <button class="btn btn-outline-info me-2" type="button">Home</button>
-            <button class="btn btn-outline-info me-2" type="button">Login</button>
-            <button class="btn btn-outline-info me-2" type="button">Register</button>
-            <button class="btn btn-outline-info me-2" type="button">Logout</button>
+            <li class="nav-item">
+                <a class="nav-link link-info border border-2 border-info rounded-pill p-2 me-2"
+                   th:href="@{/users/admin}">Admin</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-info border border-2 border-info rounded-pill p-2 me-2"
+                   th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-info border border-2 border-info rounded-pill p-2 me-2"
+                   th:href="@{/users/login}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-info border border-2 border-info rounded-pill p-2 me-2"
+                   th:href="@{/users/register}">Register</a>
+            </li>
+            <li class="nav-item">
+                <form th:action="@{/users/logout}"
+                      th:method="POST">
+                    <button class="btn btn-outline-info border-2 rounded-pill p-2 me-2" type="submit">Logout</button>
+                </form>
+            </li>
         </form>
     </nav>
 </nav>
 
-<footer th:fragment="footer" class="footer">
+<footer th:fragment="footer" class="footer text-info fw-bolder container-fluid text-center pt-5 pb-5">
     &copy; Antoni Veznev & ™ Lucasfilm Ltd. All Rights Reserved
 </footer>
 
