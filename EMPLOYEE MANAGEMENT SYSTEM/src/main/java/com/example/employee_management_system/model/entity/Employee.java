@@ -15,8 +15,18 @@ public class Employee extends BaseEntity {
     private Address address;
     private Position position;
     private Department department;
+    private User user;
 
     public Employee() {
+    }
+    @OneToOne
+    public User getUser() {
+        return user;
+    }
+
+    public Employee setUser(User user) {
+        this.user = user;
+        return this;
     }
 
     @ManyToOne

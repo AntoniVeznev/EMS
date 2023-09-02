@@ -10,13 +10,12 @@ public class User extends BaseEntity {
     private String username;
     private String password;
     private List<Role> roles;
-    private Employee employee;
 
     public User() {
 
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     public List<Role> getRoles() {
         return roles;
     }
@@ -26,15 +25,7 @@ public class User extends BaseEntity {
         return this;
     }
 
-    @OneToOne
-    public Employee getEmployee() {
-        return employee;
-    }
 
-    public User setEmployee(Employee employee) {
-        this.employee = employee;
-        return this;
-    }
 
     @Column(name = "username", unique = true, nullable = false, columnDefinition = "TEXT")
     public String getUsername() {

@@ -1,5 +1,7 @@
 package com.example.employee_management_system.service.impl;
 
+import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
+import com.example.employee_management_system.model.entity.Role;
 import com.example.employee_management_system.model.entity.User;
 import com.example.employee_management_system.repository.EmployeeRepository;
 import com.example.employee_management_system.repository.RoleRepository;
@@ -8,6 +10,9 @@ import com.example.employee_management_system.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,9 +47,27 @@ public class UserServiceImpl implements UserService {
         initDefaultUser();
     }
 
+    @Override
+    public boolean checkUsername(String username) {
+        Optional<User> userByUsername = userRepository.findUserByUsername(username);
+        return userByUsername.isPresent();
+    }
+
+    @Override
+    public void registerUser(UserRegisterBindingModel userRegisterBindingModel) {
+        User user = new User();
+
+        user    .setRoles(roleRepository.findById(3L).stream().toList())
+                .setUsername(userRegisterBindingModel.getUsername())
+                .setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
+        userRepository.save(user);
+
+    }
+
+
     private void initDefaultUser() {
         User user = new User();
-        user.setEmployee(employeeRepository.findById(3L).orElseThrow())
+        user
                 .setUsername("User")
                 .setPassword(passwordEncoder.encode(defaultPasswordForEmployee))
                 .setRoles(roleRepository.findById(3L).stream().toList());
@@ -54,7 +77,6 @@ public class UserServiceImpl implements UserService {
     private void initDefaultModerator() {
         User moderatorUser = new User();
         moderatorUser
-                .setEmployee(employeeRepository.findById(2L).orElseThrow())
                 .setUsername("Moderator")
                 .setPassword(passwordEncoder.encode(defaultPasswordForModerator))
                 .setRoles(roleRepository.findById(2L).stream().toList());
@@ -64,7 +86,6 @@ public class UserServiceImpl implements UserService {
     private void initDefaultAdmin() {
         User bossUser = new User();
         bossUser
-                .setEmployee(employeeRepository.findById(1L).orElseThrow())
                 .setUsername("Boss")
                 .setPassword(passwordEncoder.encode(defaultPasswordForBoss))
                 .setRoles(roleRepository.findById(1L).stream().toList());
