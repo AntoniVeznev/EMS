@@ -3,13 +3,11 @@ package com.example.employee_management_system.service.impl;
 import com.example.employee_management_system.model.entity.Address;
 import com.example.employee_management_system.model.entity.Employee;
 import com.example.employee_management_system.model.entity.Location;
-import com.example.employee_management_system.model.entity.enums.LocationNameEnum;
 import com.example.employee_management_system.repository.*;
 import com.example.employee_management_system.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {

@@ -3,7 +3,6 @@ package com.example.employee_management_system.web;
 import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
 import com.example.employee_management_system.service.UserService;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +16,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/users")
 public class UserController {
-    private final ModelMapper modelMapper;
+
     private final UserService userService;
 
 
-    public UserController(ModelMapper modelMapper, UserService userService) {
-        this.modelMapper = modelMapper;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -85,7 +83,5 @@ public class UserController {
     public String getAdmin() {
         return "admin";
     }
-
-
 
 }

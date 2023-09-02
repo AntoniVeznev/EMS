@@ -49,7 +49,8 @@
                     <input th:field="*{confirmPassword}" th:errorclass="is-invalid" type="password" class="form-control"
                            id="confirmPassword"
                            aria-describedby="confirmPasswordHelpInline" placeholder="Confirm password">
-                    <small  th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" id="confirmPasswordHelpInline"
+                    <small th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"
+                           id="confirmPasswordHelpInline"
                            class="invalid-feedback bg-danger text-light rounded">
                         Confirm Password length must be between 5 and 20 characters.
                     </small>

@@ -1,9 +1,7 @@
 package com.example.employee_management_system.service.impl;
 
 import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
-import com.example.employee_management_system.model.entity.Role;
 import com.example.employee_management_system.model.entity.User;
-import com.example.employee_management_system.repository.EmployeeRepository;
 import com.example.employee_management_system.repository.RoleRepository;
 import com.example.employee_management_system.repository.UserRepository;
 import com.example.employee_management_system.service.UserService;
@@ -11,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,19 +16,17 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final EmployeeRepository employeeRepository;
     private final String defaultPasswordForBoss;
     private final String defaultPasswordForModerator;
     private final String defaultPasswordForEmployee;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, EmployeeRepository employeeRepository,
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
                            @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.boss.defaultPasswordForBoss}") String bossPassword,
                            @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.moderator.defaultPasswordForModerator}") String moderatorPassword,
                            @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.employee.defaultPasswordForEmployee}") String employeePassword) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-        this.employeeRepository = employeeRepository;
         this.defaultPasswordForBoss = bossPassword;
         this.defaultPasswordForModerator = moderatorPassword;
         this.defaultPasswordForEmployee = employeePassword;

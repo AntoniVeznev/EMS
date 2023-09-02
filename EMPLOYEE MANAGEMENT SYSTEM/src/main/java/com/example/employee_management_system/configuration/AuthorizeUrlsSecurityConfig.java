@@ -13,8 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +27,7 @@ public class AuthorizeUrlsSecurityConfig {
                         .requestMatchers("/", "/index", "/users/login-error").permitAll()
                         .requestMatchers("/users/login", "/users/register").anonymous()
                         .requestMatchers("/users/logout", "/", "/index").authenticated()
-                        .requestMatchers("/departments","/employees").hasAnyRole(RoleNameEnum.BOSS.name(),RoleNameEnum.MODERATOR.name())
+                        .requestMatchers("/departments", "/employees").hasAnyRole(RoleNameEnum.BOSS.name(), RoleNameEnum.MODERATOR.name())
                         .requestMatchers("/admin").hasRole(RoleNameEnum.BOSS.name())
                         .anyRequest()
                         .authenticated()
@@ -61,29 +59,4 @@ public class AuthorizeUrlsSecurityConfig {
     }
 }
 
-
-
-
-
-
-
-
-/*public class SpringSecurityConfiguration {
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-       httpSecurity.authorizeHttpRequests();
-
-        return httpSecurity.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
-        return new ApplicationUserDetailServiceImpl(userRepository);
-    }
-}*/
 
