@@ -3,26 +3,34 @@ package com.example.employee_management_system.service.impl;
 import com.example.employee_management_system.model.entity.Address;
 import com.example.employee_management_system.model.entity.Employee;
 import com.example.employee_management_system.model.entity.Location;
+import com.example.employee_management_system.model.view.EmployeeViewModel;
 import com.example.employee_management_system.repository.*;
 import com.example.employee_management_system.service.EmployeeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final UserRepository userRepository;
     private final PositionRepository positionRepository;
     private final DepartmentRepository departmentRepository;
     private final LocationRepository locationRepository;
     private final AddressRepository addressRepository;
+    private final ModelMapper modelMapper;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PositionRepository positionRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, AddressRepository addressRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, UserRepository userRepository, PositionRepository positionRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, AddressRepository addressRepository, ModelMapper modelMapper) {
         this.employeeRepository = employeeRepository;
+        this.userRepository = userRepository;
         this.positionRepository = positionRepository;
         this.departmentRepository = departmentRepository;
         this.locationRepository = locationRepository;
         this.addressRepository = addressRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -33,6 +41,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         addBoss();
         addModerator();
         addEmployee();
+    }
+
+    @Override
+    public List<EmployeeViewModel> allEmployees() {
+        return employeeRepository.findAll()
+                .stream()
+                .map(employee -> {
+                    EmployeeViewModel employeeViewModel = modelMapper.map(employee, EmployeeViewModel.class);
+                    employeeViewModel
+                            .setTown(employee.getAddress().getTown())
+                            .setUser(employee.getUser().getUsername())
+                            .setPosition(employee.getPosition().getPosition().name())
+                            .setDepartment(employee.getDepartment().getDepartment().name());
+                    return employeeViewModel;
+                })
+                .collect(Collectors.toList());
+
     }
 
     private void addEmployee() {
@@ -48,7 +73,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .setLocation(location);
         addressRepository.save(address);
 
-        employee.setFullName("User Userov")
+        employee.setUser(userRepository.findUserByUsername("User").orElseThrow())
+                .setFullName("User Userov")
                 .setEmail("user@gmail.com")
                 .setBirthday(LocalDate.of(1995, 9, 9))
                 .setHiredOn(LocalDate.of(2015, 6, 6))
@@ -72,7 +98,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .setLocation(location);
         addressRepository.save(address);
 
-        employee.setFullName("Moderator Moderatorov")
+        employee.setUser(userRepository.findUserByUsername("Moderator").orElseThrow())
+                .setFullName("Moderator Moderatorov")
                 .setEmail("moderator@gmail.com")
                 .setBirthday(LocalDate.of(1985, 6, 6))
                 .setHiredOn(LocalDate.of(2010, 4, 4))
@@ -96,7 +123,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .setLocation(location);
         addressRepository.save(address);
 
-        employee.setFullName("Boss Bossov")
+        employee.setUser(userRepository.findUserByUsername("Boss").orElseThrow())
+                .setFullName("Boss Bossov")
                 .setEmail("boss@gmail.com")
                 .setBirthday(LocalDate.of(1975, 3, 3))
                 .setHiredOn(LocalDate.of(2000, 2, 2))

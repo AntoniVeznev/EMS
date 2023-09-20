@@ -31,7 +31,8 @@ public class DataBaseInit implements CommandLineRunner {
         locationService.initLocation();
         positionService.initPosition();
         roleService.initRoles();
-        employeeService.initEmployee();
         userService.initUsers();
+        employeeService.initEmployee();
+
     }
 }
