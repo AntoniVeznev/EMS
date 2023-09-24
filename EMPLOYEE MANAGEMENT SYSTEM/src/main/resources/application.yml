@@ -1,8 +1,8 @@
 spring:
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/EMPLOYEE_MANAGEMENT_SYSTEM?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
-    username: root
+    driverClassName: org.postgresql.Driver
+    url: "jdbc:postgresql://localhost:5432/EMPLOYEE_MANAGEMENT_SYSTEM?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
+    username: postgres
     password: 1234
   servlet:
     multipart:
@@ -10,7 +10,7 @@ spring:
       max-request-size: 10MB
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     #For MySQL 5
     #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
@@ -19,6 +19,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        schema_update:
+          unique_constraint_strategy: RECREATE_QUIETLY
     defer-datasource-initialization: true
   mvc:
     hiddenmethod:
