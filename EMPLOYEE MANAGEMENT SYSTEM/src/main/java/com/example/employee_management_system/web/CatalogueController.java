@@ -16,21 +16,24 @@ import java.util.List;
 public class CatalogueController {
     private final EmployeeService employeeService;
     private final UserService userService;
+
     public CatalogueController(EmployeeService employeeService, UserService userService) {
         this.employeeService = employeeService;
         this.userService = userService;
     }
 
     @GetMapping("/departments")
-    public String getDepartments(){
+    public String getDepartments() {
         return "departments";
     }
+
     @GetMapping("/users")
     public String getUsers(Model model) {
         List<UserViewModel> allUsers = userService.allUsers();
-        model.addAttribute("allUsers",allUsers);
+        model.addAttribute("allUsers", allUsers);
         return "users";
     }
+
     @GetMapping("/employees")
     public String getEmployees(Model model) {
         List<EmployeeViewModel> allEmployees = employeeService.allEmployees();

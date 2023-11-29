@@ -6,12 +6,14 @@ import com.example.employee_management_system.model.view.UserViewModel;
 import com.example.employee_management_system.repository.RoleRepository;
 import com.example.employee_management_system.repository.UserRepository;
 import com.example.employee_management_system.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,17 +23,19 @@ public class UserServiceImpl implements UserService {
     private final String defaultPasswordForBoss;
     private final String defaultPasswordForModerator;
     private final String defaultPasswordForEmployee;
+    private final ModelMapper modelMapper;
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
                            @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.boss.defaultPasswordForBoss}") String bossPassword,
                            @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.moderator.defaultPasswordForModerator}") String moderatorPassword,
-                           @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.employee.defaultPasswordForEmployee}") String employeePassword) {
+                           @Value("${spring.EMPLOYEE MANAGEMENT SYSTEM.employee.defaultPasswordForEmployee}") String employeePassword, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.defaultPasswordForBoss = bossPassword;
         this.defaultPasswordForModerator = moderatorPassword;
         this.defaultPasswordForEmployee = employeePassword;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class UserServiceImpl implements UserService {
     public void registerUser(UserRegisterBindingModel userRegisterBindingModel) {
         User user = new User();
 
-        user    .setRoles(roleRepository.findById(3L).stream().toList())
+        user.setRoles(roleRepository.findById(3L).stream().toList())
                 .setUsername(userRegisterBindingModel.getUsername())
                 .setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
         userRepository.save(user);
@@ -63,8 +67,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserViewModel> allUsers() {
-        //TODO:!!!!
-        return null;
+        return userRepository.findAllByEmployeeIDIsNull()
+                .stream()
+                .map(user -> {
+                    UserViewModel userViewModel = modelMapper.map(user, UserViewModel.class);
+                    userViewModel.setUsername(user.getUsername());
+                    return userViewModel;
+                })
+                .collect(Collectors.toList());
     }
 
 
@@ -73,7 +83,8 @@ public class UserServiceImpl implements UserService {
         user
                 .setUsername("User")
                 .setPassword(passwordEncoder.encode(defaultPasswordForEmployee))
-                .setRoles(roleRepository.findById(3L).stream().toList());
+                .setRoles(roleRepository.findById(3L).stream().toList())
+                .setEmployeeID(3L);
         userRepository.save(user);
     }
 
@@ -82,7 +93,9 @@ public class UserServiceImpl implements UserService {
         moderatorUser
                 .setUsername("Moderator")
                 .setPassword(passwordEncoder.encode(defaultPasswordForModerator))
-                .setRoles(roleRepository.findById(2L).stream().toList());
+                .setRoles(roleRepository.findById(2L).stream().toList())
+                .setEmployeeID(2L);
+        ;
         userRepository.save(moderatorUser);
     }
 
@@ -91,7 +104,8 @@ public class UserServiceImpl implements UserService {
         bossUser
                 .setUsername("Boss")
                 .setPassword(passwordEncoder.encode(defaultPasswordForBoss))
-                .setRoles(roleRepository.findById(1L).stream().toList());
+                .setRoles(roleRepository.findById(1L).stream().toList())
+                .setEmployeeID(1L);
         userRepository.save(bossUser);
     }
 }
