@@ -29,8 +29,8 @@ public class CatalogueController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        List<UserViewModel> allUsers = userService.allUsers();
-        model.addAttribute("allUsers", allUsers);
+        List<UserViewModel> nullEmployees = employeeService.nullEmployees();
+        model.addAttribute("nullEmployees", nullEmployees);
         return "users";
     }
 

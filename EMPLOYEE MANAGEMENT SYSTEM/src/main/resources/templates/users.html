@@ -16,13 +16,13 @@
     <thead class="table-info">
     <tr class="table-warning text-center">
         <th scope="col">Users</th>
-        <th scope="col">Fill User Info</th>
+        <th scope="col">Empty user info</th>
     </tr>
     </thead>
 
     <tbody class="table-info">
 
-    <tr class="table-info text-center" th:each="usr : ${allUsers}" th:object="${usr}">
+    <tr class="table-info text-center" th:each="emp : ${nullEmployees}" th:object="${emp}">
         <th th:text="*{username}" scope="col">Full Name</th>
         <th>
             <li class="nav-item">

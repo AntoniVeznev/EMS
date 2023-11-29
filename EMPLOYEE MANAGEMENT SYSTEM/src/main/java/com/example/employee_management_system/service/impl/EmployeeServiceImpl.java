@@ -1,15 +1,19 @@
 package com.example.employee_management_system.service.impl;
 
+import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
 import com.example.employee_management_system.model.entity.Address;
 import com.example.employee_management_system.model.entity.Employee;
 import com.example.employee_management_system.model.entity.Location;
+import com.example.employee_management_system.model.entity.User;
 import com.example.employee_management_system.model.view.EmployeeViewModel;
+import com.example.employee_management_system.model.view.UserViewModel;
 import com.example.employee_management_system.repository.*;
 import com.example.employee_management_system.service.EmployeeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +49,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeViewModel> allEmployees() {
-        return employeeRepository.findAll()
+        return employeeRepository
+                .findAllByFullNameIsNotNull()
                 .stream()
                 .map(employee -> {
                     EmployeeViewModel employeeViewModel = modelMapper.map(employee, EmployeeViewModel.class);
@@ -55,9 +60,26 @@ public class EmployeeServiceImpl implements EmployeeService {
                             .setPosition(employee.getPosition().getPosition().name())
                             .setDepartment(employee.getDepartment().getDepartment().name());
                     return employeeViewModel;
-                })
-                .collect(Collectors.toList());
+                }).collect(Collectors.toList());
+    }
 
+    @Override
+    public void createEmptyEmploy(UserRegisterBindingModel userRegisterBindingModel) {
+        Employee employee = new Employee();
+        employee.setUser(userRepository.findUserByUsername(userRegisterBindingModel.getUsername()).orElseThrow());
+        employeeRepository.save(employee);
+    }
+
+    @Override
+    public List<UserViewModel> nullEmployees() {
+        List<Employee> test = employeeRepository.findAllByFullNameIsNull();
+        List<UserViewModel> newList = new ArrayList<>();
+        for (Employee employee : test) {
+            User user = employee.getUser();
+            user.setUsername(employee.getUser().getUsername());
+            newList.add(modelMapper.map(user,UserViewModel.class));
+        }
+        return newList;
     }
 
     private void addEmployee() {

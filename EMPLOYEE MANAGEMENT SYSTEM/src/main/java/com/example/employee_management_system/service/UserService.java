@@ -9,5 +9,5 @@ public interface UserService {
     void initUsers();
     boolean checkUsername(String username);
     void registerUser(UserRegisterBindingModel userRegisterBindingModel);
-    List<UserViewModel> allUsers();
+
 }

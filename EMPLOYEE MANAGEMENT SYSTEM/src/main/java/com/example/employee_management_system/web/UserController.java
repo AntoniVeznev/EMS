@@ -1,6 +1,7 @@
 package com.example.employee_management_system.web;
 
 import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
+import com.example.employee_management_system.service.EmployeeService;
 import com.example.employee_management_system.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,10 +19,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserService userService;
+    private final EmployeeService employeeService;
 
-
-    public UserController(UserService userService) {
+    public UserController(UserService userService, EmployeeService employeeService) {
         this.userService = userService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/login")
@@ -74,6 +76,7 @@ public class UserController {
         }
 
         userService.registerUser(userRegisterBindingModel);
+        employeeService.createEmptyEmploy(userRegisterBindingModel);
 
         return "redirect:login";
     }

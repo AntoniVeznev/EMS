@@ -19,6 +19,7 @@ public class Employee extends BaseEntity {
 
     public Employee() {
     }
+
     @OneToOne
     public User getUser() {
         return user;
@@ -59,7 +60,7 @@ public class Employee extends BaseEntity {
         return this;
     }
 
-    @Column(name = "full_name", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "full_name",  columnDefinition = "TEXT")
     public String getFullName() {
         return fullName;
     }
@@ -69,7 +70,7 @@ public class Employee extends BaseEntity {
         return this;
     }
 
-    @Column(name = "email", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "email",  columnDefinition = "TEXT")
     public String getEmail() {
         return email;
     }
@@ -79,7 +80,7 @@ public class Employee extends BaseEntity {
         return this;
     }
 
-    @Column(name = "mobile_phone", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "mobile_phone", columnDefinition = "TEXT")
     public String getMobilePhone() {
         return mobilePhone;
     }
@@ -89,7 +90,7 @@ public class Employee extends BaseEntity {
         return this;
     }
 
-    @Column(name = "birthday", nullable = false)
+    @Column(name = "birthday")
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -99,7 +100,7 @@ public class Employee extends BaseEntity {
         return this;
     }
 
-    @Column(name = "hired_on", nullable = false)
+    @Column(name = "hired_on")
     public LocalDate getHiredOn() {
         return hiredOn;
     }

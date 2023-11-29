@@ -1,6 +1,7 @@
 package com.example.employee_management_system.service.impl;
 
 import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
+import com.example.employee_management_system.model.entity.Employee;
 import com.example.employee_management_system.model.entity.User;
 import com.example.employee_management_system.model.view.UserViewModel;
 import com.example.employee_management_system.repository.RoleRepository;
@@ -57,7 +58,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerUser(UserRegisterBindingModel userRegisterBindingModel) {
         User user = new User();
-
         user.setRoles(roleRepository.findById(3L).stream().toList())
                 .setUsername(userRegisterBindingModel.getUsername())
                 .setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
@@ -65,36 +65,26 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public List<UserViewModel> allUsers() {
-        return userRepository.findAllByEmployeeIDIsNull()
-                .stream()
-                .map(user -> {
-                    UserViewModel userViewModel = modelMapper.map(user, UserViewModel.class);
-                    userViewModel.setUsername(user.getUsername());
-                    return userViewModel;
-                })
-                .collect(Collectors.toList());
-    }
+
 
 
     private void initDefaultUser() {
         User user = new User();
         user
+
                 .setUsername("User")
                 .setPassword(passwordEncoder.encode(defaultPasswordForEmployee))
-                .setRoles(roleRepository.findById(3L).stream().toList())
-                .setEmployeeID(3L);
+                .setRoles(roleRepository.findById(3L).stream().toList());
         userRepository.save(user);
     }
 
     private void initDefaultModerator() {
         User moderatorUser = new User();
         moderatorUser
+
                 .setUsername("Moderator")
                 .setPassword(passwordEncoder.encode(defaultPasswordForModerator))
-                .setRoles(roleRepository.findById(2L).stream().toList())
-                .setEmployeeID(2L);
+                .setRoles(roleRepository.findById(2L).stream().toList());
         ;
         userRepository.save(moderatorUser);
     }
@@ -104,8 +94,7 @@ public class UserServiceImpl implements UserService {
         bossUser
                 .setUsername("Boss")
                 .setPassword(passwordEncoder.encode(defaultPasswordForBoss))
-                .setRoles(roleRepository.findById(1L).stream().toList())
-                .setEmployeeID(1L);
+                .setRoles(roleRepository.findById(1L).stream().toList());
         userRepository.save(bossUser);
     }
 }

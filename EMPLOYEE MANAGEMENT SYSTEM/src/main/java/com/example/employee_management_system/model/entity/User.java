@@ -10,19 +10,9 @@ public class User extends BaseEntity {
     private String username;
     private String password;
     private List<Role> roles;
-    private Long employeeID;
 
     public User() {
 
-    }
-
-    public Long getEmployeeID() {
-        return employeeID;
-    }
-
-    public User setEmployeeID(Long employeeID) {
-        this.employeeID = employeeID;
-        return this;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
