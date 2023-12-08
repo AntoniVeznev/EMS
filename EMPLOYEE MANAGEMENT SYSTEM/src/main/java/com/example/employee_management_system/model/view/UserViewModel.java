@@ -1,9 +1,5 @@
 package com.example.employee_management_system.model.view;
 
-import com.example.employee_management_system.model.entity.Role;
-
-import java.util.List;
-
 public class UserViewModel {
     private String username;
     private String password;

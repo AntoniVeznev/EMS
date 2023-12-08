@@ -6,6 +6,7 @@ import com.example.employee_management_system.model.entity.Employee;
 import com.example.employee_management_system.model.entity.Location;
 import com.example.employee_management_system.model.entity.User;
 import com.example.employee_management_system.model.view.EmployeeViewModel;
+import com.example.employee_management_system.model.view.EmptyEmployeeViewModel;
 import com.example.employee_management_system.model.view.UserViewModel;
 import com.example.employee_management_system.repository.*;
 import com.example.employee_management_system.service.EmployeeService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,16 +73,28 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<UserViewModel> nullEmployees() {
-        List<Employee> test = employeeRepository.findAllByFullNameIsNull();
-        List<UserViewModel> newList = new ArrayList<>();
-        for (Employee employee : test) {
-            User user = employee.getUser();
-            user.setUsername(employee.getUser().getUsername());
-            newList.add(modelMapper.map(user,UserViewModel.class));
+    public List<EmptyEmployeeViewModel> nullEmployees() {
+        List<Employee> allByFullNameIsNull = employeeRepository.findAllByFullNameIsNull();
+        List<EmptyEmployeeViewModel> empty = new ArrayList<>();
+        for (Employee employee : allByFullNameIsNull) {
+            String username = employee.getUser().getUsername();
+            Long id = employee.getUser().getId();
+            EmptyEmployeeViewModel employeeViewModel = new EmptyEmployeeViewModel();
+            employeeViewModel.setUserID(id);
+            employeeViewModel.setUsername(username);
+            empty.add(employeeViewModel);
         }
-        return newList;
+        return empty;
     }
+
+    @Override
+    public EmployeeViewModel findEmployeeWithID(Long id) {
+     Employee byId = employeeRepository.findById(id).orElseThrow();
+        EmployeeViewModel map = modelMapper.map(byId, EmployeeViewModel.class);
+        map.setUser(userRepository.findById(id).get().getUsername());
+        return map;
+    }
+
 
     private void addEmployee() {
         Employee employee = new Employee();

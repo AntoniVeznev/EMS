@@ -1,6 +1,7 @@
 package com.example.employee_management_system.web;
 
 import com.example.employee_management_system.model.view.EmployeeViewModel;
+import com.example.employee_management_system.model.view.EmptyEmployeeViewModel;
 import com.example.employee_management_system.model.view.UserViewModel;
 import com.example.employee_management_system.service.EmployeeService;
 import com.example.employee_management_system.service.UserService;
@@ -29,7 +30,7 @@ public class CatalogueController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        List<UserViewModel> nullEmployees = employeeService.nullEmployees();
+        List<EmptyEmployeeViewModel> nullEmployees = employeeService.nullEmployees();
         model.addAttribute("nullEmployees", nullEmployees);
         return "users";
     }

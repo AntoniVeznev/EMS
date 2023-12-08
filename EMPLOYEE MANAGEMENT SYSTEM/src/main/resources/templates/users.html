@@ -23,15 +23,11 @@
     <tbody class="table-info">
 
     <tr class="table-info text-center" th:each="emp : ${nullEmployees}" th:object="${emp}">
-        <th th:text="*{username}" scope="col">Full Name</th>
+        <th th:text="*{username}" scope="col">
+            Full Name
+        </th>
         <th>
-            <li class="nav-item">
-                <!--<form th:action="@{/users/logout}"
-                      th:method="GET">-->
-                <button class="btn fw-bolder text-decoration-underline  p-2 me-2" type="submit">EDIT
-                </button>
-                <!-- </form>-->
-            </li>
+            <a th:href="@{/edit/employees/{id}(id=*{userID})}"> EDIT </a>
         </th>
     </tr>
 
