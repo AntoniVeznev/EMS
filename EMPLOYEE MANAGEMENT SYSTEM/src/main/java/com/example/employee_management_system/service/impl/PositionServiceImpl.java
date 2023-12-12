@@ -20,7 +20,7 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public void initPosition() {
 
-        if (positionRepository.count()>0){
+        if (positionRepository.count() > 0) {
             return;
         }
         Arrays.stream(PositionNameEnum.values()).forEach(positionNameEnum -> {

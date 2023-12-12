@@ -1,9 +1,7 @@
 package com.example.employee_management_system.service.impl;
 
 import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
-import com.example.employee_management_system.model.entity.Employee;
 import com.example.employee_management_system.model.entity.User;
-import com.example.employee_management_system.model.view.UserViewModel;
 import com.example.employee_management_system.repository.RoleRepository;
 import com.example.employee_management_system.repository.UserRepository;
 import com.example.employee_management_system.service.UserService;
@@ -12,9 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -66,12 +62,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
     private void initDefaultUser() {
         User user = new User();
         user
-
                 .setUsername("User")
                 .setPassword(passwordEncoder.encode(defaultPasswordForEmployee))
                 .setRoles(roleRepository.findById(3L).stream().toList());
@@ -81,7 +74,6 @@ public class UserServiceImpl implements UserService {
     private void initDefaultModerator() {
         User moderatorUser = new User();
         moderatorUser
-
                 .setUsername("Moderator")
                 .setPassword(passwordEncoder.encode(defaultPasswordForModerator))
                 .setRoles(roleRepository.findById(2L).stream().toList());

@@ -60,7 +60,7 @@ public class Employee extends BaseEntity {
         return this;
     }
 
-    @Column(name = "full_name",  columnDefinition = "TEXT")
+    @Column(name = "full_name", columnDefinition = "TEXT")
     public String getFullName() {
         return fullName;
     }
@@ -70,7 +70,7 @@ public class Employee extends BaseEntity {
         return this;
     }
 
-    @Column(name = "email",  columnDefinition = "TEXT")
+    @Column(name = "email", columnDefinition = "TEXT")
     public String getEmail() {
         return email;
     }

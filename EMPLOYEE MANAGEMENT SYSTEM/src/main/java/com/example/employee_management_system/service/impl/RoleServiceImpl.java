@@ -25,9 +25,9 @@ public class RoleServiceImpl implements RoleService {
 
         Arrays.stream(RoleNameEnum.values())
                 .forEach(roleNameEnum -> {
-            Role currentRole = new Role();
-            currentRole.setRole(roleNameEnum);
-            roleRepository.save(currentRole);
-        });
+                    Role currentRole = new Role();
+                    currentRole.setRole(roleNameEnum);
+                    roleRepository.save(currentRole);
+                });
     }
 }

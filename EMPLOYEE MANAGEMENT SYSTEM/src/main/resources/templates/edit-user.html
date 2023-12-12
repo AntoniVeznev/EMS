@@ -9,12 +9,6 @@
 <body class="container-fluid justify-content-center bg-dark">
 
 
-<!-- <form class="register"
-              th:action="@{/users/register}"
-              th:method="POST"
-              th:object="${userRegisterBindingModel}">-->
-
-<!--<a th:href="@{/edit/employees/{id}(id=*{userID})}"> EDIT </a>-->
 <form class="edit"
       th:action="@{/edit/employees/{id}(id=*{id})}"
       th:method="GET"

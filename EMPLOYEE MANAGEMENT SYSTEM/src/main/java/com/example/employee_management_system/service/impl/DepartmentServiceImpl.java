@@ -24,7 +24,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Arrays
                 .stream(DepartmentNameEnum.values())
                 .forEach(departmentNameEnum -> {
-                    Department department=new Department();
+                    Department department = new Department();
                     department.setDepartment(departmentNameEnum);
                     departmentRepository.save(department);
                 });

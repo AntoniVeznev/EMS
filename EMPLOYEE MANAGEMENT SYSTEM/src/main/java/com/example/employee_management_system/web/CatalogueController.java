@@ -2,7 +2,6 @@ package com.example.employee_management_system.web;
 
 import com.example.employee_management_system.model.view.EmployeeViewModel;
 import com.example.employee_management_system.model.view.EmptyEmployeeViewModel;
-import com.example.employee_management_system.model.view.UserViewModel;
 import com.example.employee_management_system.service.EmployeeService;
 import com.example.employee_management_system.service.UserService;
 import org.springframework.stereotype.Controller;

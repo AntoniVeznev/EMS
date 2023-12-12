@@ -44,7 +44,6 @@ public class AuthorizeUrlsSecurityConfig {
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                 );
-
         return http.build();
     }
 
@@ -58,5 +57,3 @@ public class AuthorizeUrlsSecurityConfig {
         return new ApplicationUserDetailServiceImpl(userRepository);
     }
 }
-
-

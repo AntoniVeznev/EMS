@@ -20,10 +20,10 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void initLocation() {
-        if (locationRepository.count()>0){
+        if (locationRepository.count() > 0) {
             return;
         }
-        Arrays.stream(LocationNameEnum.values()).forEach( locationNameEnum -> {
+        Arrays.stream(LocationNameEnum.values()).forEach(locationNameEnum -> {
             Location location = new Location();
             location.setLocation(locationNameEnum);
             locationRepository.save(location);
