@@ -1,9 +1,8 @@
 package com.example.employee_management_system.service.impl;
 
+import com.example.employee_management_system.model.binding.EmployeeFillInfoBindingModel;
 import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
-import com.example.employee_management_system.model.entity.Address;
-import com.example.employee_management_system.model.entity.Employee;
-import com.example.employee_management_system.model.entity.Location;
+import com.example.employee_management_system.model.entity.*;
 import com.example.employee_management_system.model.view.EmployeeViewModel;
 import com.example.employee_management_system.model.view.EmptyEmployeeViewModel;
 import com.example.employee_management_system.repository.*;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,6 +89,34 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee byId = employeeRepository.findById(id).orElseThrow();
         EmployeeViewModel map = modelMapper.map(byId, EmployeeViewModel.class);
         map.setUser(userRepository.findById(id).get().getUsername());
+        return map;
+    }
+
+    @Override
+    public void fillDataWithMoreEmployeeInfo(Long id, EmployeeFillInfoBindingModel employeeFillInfoBindingModel) {
+        Employee employeeToUpdate = modelMapper.map(employeeFillInfoBindingModel, Employee.class);
+
+        Address address = new Address();
+        address
+                .setStreet(employeeFillInfoBindingModel.getStreet())
+                .setTown(employeeFillInfoBindingModel.getTown())
+                .setLocation(locationRepository.findLocationByLocation(employeeFillInfoBindingModel.getLocation()));
+        addressRepository.save(address);
+
+        employeeToUpdate
+                .setAddress(address)
+                .setDepartment(departmentRepository.findDepartmentByDepartment(employeeFillInfoBindingModel.getDepartment()))
+                .setPosition(positionRepository.findPositionByPosition(employeeFillInfoBindingModel.getPosition()))
+                .setUser(userRepository.findById(id).orElseThrow());
+
+        employeeRepository.save(employeeToUpdate);
+    }
+
+    @Override
+    public EmployeeFillInfoBindingModel findByIDTEST(Long id) {
+        Optional<Employee> byId = employeeRepository.findById(id);
+        EmployeeFillInfoBindingModel map = modelMapper.map(byId, EmployeeFillInfoBindingModel.class);
+        System.out.println();
         return map;
     }
 

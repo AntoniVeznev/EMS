@@ -1,5 +1,6 @@
 package com.example.employee_management_system.service;
 
+import com.example.employee_management_system.model.binding.EmployeeFillInfoBindingModel;
 import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
 import com.example.employee_management_system.model.view.EmployeeViewModel;
 import com.example.employee_management_system.model.view.EmptyEmployeeViewModel;
@@ -18,4 +19,8 @@ public interface EmployeeService {
 
 
     EmployeeViewModel findEmployeeWithID(Long id);
+
+    void fillDataWithMoreEmployeeInfo(Long id, EmployeeFillInfoBindingModel employeeFillInfoBindingModel);
+
+    EmployeeFillInfoBindingModel findByIDTEST(Long id);
 }
