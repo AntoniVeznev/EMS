@@ -3,6 +3,7 @@ package com.example.employee_management_system.service.impl;
 import com.example.employee_management_system.model.binding.UserRegisterBindingModel;
 import com.example.employee_management_system.model.entity.*;
 import com.example.employee_management_system.model.entity.enums.DepartmentNameEnum;
+import com.example.employee_management_system.model.entity.enums.HoursNameEnum;
 import com.example.employee_management_system.model.entity.enums.LocationNameEnum;
 import com.example.employee_management_system.model.entity.enums.PositionNameEnum;
 import com.example.employee_management_system.model.view.EmployeeViewModel;
@@ -50,13 +51,15 @@ class EmployeeServiceImplTest {
     @Mock
     private AddressRepository mockAddressRepository;
     @Mock
+    private HoursRepository mockHoursRepository;
+    @Mock
     private ModelMapper mockModelMapper;
 
     @BeforeEach
     void setup() {
         serviceToTest = new EmployeeServiceImpl(
                 mockEmployeeRepository, mockUserRepository, mockPositionRepository,
-                mockDepartmentRepository, mockLocationRepository, mockAddressRepository,
+                mockDepartmentRepository, mockHoursRepository, mockLocationRepository, mockAddressRepository,
                 mockModelMapper);
 
     }
@@ -68,16 +71,19 @@ class EmployeeServiceImplTest {
         User testUser1 = createUserMethod(BOSS_USERNAME);
         Position testPosition1 = createPositionMethod(PositionNameEnum.CEO);
         Department testDepartment1 = createDepartmentMethod(DepartmentNameEnum.EXECUTIVE);
+        Hours testHours1 = createHoursMethod();
 
         Location testLocation2 = createLocationMethod(LocationNameEnum.CANADA, 2L);
         User testUser2 = createUserMethod(MODERATOR_USERNAME);
         Position testPosition2 = createPositionMethod(PositionNameEnum.ADMIN_MANAGER);
         Department testDepartment2 = createDepartmentMethod(DepartmentNameEnum.ADMINISTRATION);
+        Hours testHours2 = createHoursMethod();
 
         Location testLocation3 = createLocationMethod(LocationNameEnum.BULGARIA, 3L);
         User testUser3 = createUserMethod(USER_USERNAME);
         Position testPosition3 = createPositionMethod(PositionNameEnum.CTO);
         Department testDepartment3 = createDepartmentMethod(DepartmentNameEnum.PRODUCT_MARKETING);
+        Hours testHours3 = createHoursMethod();
 
         when(mockEmployeeRepository.count()).thenReturn(0L);
 
@@ -85,27 +91,31 @@ class EmployeeServiceImplTest {
         when(mockUserRepository.findUserByUsername(testUser1.getUsername())).thenReturn(Optional.of(testUser1));
         when(mockPositionRepository.findById(1L)).thenReturn(Optional.of(testPosition1));
         when(mockDepartmentRepository.findById(1L)).thenReturn(Optional.of(testDepartment1));
+        when(mockHoursRepository.findById(1L)).thenReturn(Optional.of(testHours1));
 
         when(mockLocationRepository.findById(2L)).thenReturn(Optional.of(testLocation2));
         when(mockUserRepository.findUserByUsername(testUser2.getUsername())).thenReturn(Optional.of(testUser2));
         when(mockPositionRepository.findById(2L)).thenReturn(Optional.of(testPosition2));
         when(mockDepartmentRepository.findById(2L)).thenReturn(Optional.of(testDepartment2));
+        when(mockHoursRepository.findById(1L)).thenReturn(Optional.of(testHours2));
 
         when(mockLocationRepository.findById(3L)).thenReturn(Optional.of(testLocation3));
         when(mockUserRepository.findUserByUsername(testUser3.getUsername())).thenReturn(Optional.of(testUser3));
         when(mockPositionRepository.findById(9L)).thenReturn(Optional.of(testPosition3));
         when(mockDepartmentRepository.findById(5L)).thenReturn(Optional.of(testDepartment3));
+        when(mockHoursRepository.findById(1L)).thenReturn(Optional.of(testHours3));
 
         serviceToTest.initEmployee();
 
     }
 
-    @Test
-    void testCantFindEmployeeWithGivenID() {
-        Assertions
-                .assertThrows(NoSuchElementException.class,
-                        () -> serviceToTest.findEmployeeWithID(5L));
+    private Hours createHoursMethod() {
+        Hours testHours = new Hours();
+        testHours.setHours(HoursNameEnum.FULL_TIME);
+        return testHours;
     }
+
+
 
     @Test
     void testFindEmployeeWithID() {
@@ -136,7 +146,7 @@ class EmployeeServiceImplTest {
 
         Assertions.assertEquals(mappedViewModel, testEmployeeViewModel);
 
-        serviceToTest.findEmployeeWithID(5L);
+        serviceToTest.findByIDTEST(5L);
 
     }
 

@@ -82,6 +82,21 @@
             </small>
         </div>
 
+        <div class="col-sm-10 w-100 pt-2">
+            <select th:field="*{hours}" th:errorclass="is-invalid" id="hours" name="hours"
+                    class="col-sm-10 w-100 pt-2"
+                    aria-describedby="hoursHelpInline">
+                <option value="" selected>Hours</option>
+                <option th:each="g : ${T(com.example.employee_management_system.model.entity.enums.HoursNameEnum).values()}"
+                        th:value="${g}"
+                        th:text="${g}">Action
+                </option>
+            </select>
+            <small id="hoursHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                You must select Hours!
+            </small>
+        </div>
+
 
         <div class="col-sm-10 w-100 pt-2">
             <select th:field="*{department}" th:errorclass="is-invalid" id="department" name="department"

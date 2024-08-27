@@ -22,15 +22,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final UserRepository userRepository;
     private final PositionRepository positionRepository;
     private final DepartmentRepository departmentRepository;
+    private final HoursRepository hoursRepository;
     private final LocationRepository locationRepository;
     private final AddressRepository addressRepository;
     private final ModelMapper modelMapper;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, UserRepository userRepository, PositionRepository positionRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, AddressRepository addressRepository, ModelMapper modelMapper) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, UserRepository userRepository, PositionRepository positionRepository, DepartmentRepository departmentRepository, HoursRepository hoursRepository, LocationRepository locationRepository, AddressRepository addressRepository, ModelMapper modelMapper) {
         this.employeeRepository = employeeRepository;
         this.userRepository = userRepository;
         this.positionRepository = positionRepository;
         this.departmentRepository = departmentRepository;
+        this.hoursRepository = hoursRepository;
         this.locationRepository = locationRepository;
         this.addressRepository = addressRepository;
         this.modelMapper = modelMapper;
@@ -84,13 +86,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return empty;
     }
 
-    @Override
-    public EmployeeViewModel findEmployeeWithID(Long id) {
-        Employee byId = employeeRepository.findById(id).orElseThrow();
-        EmployeeViewModel map = modelMapper.map(byId, EmployeeViewModel.class);
-        map.setUser(userRepository.findById(id).get().getUsername());
-        return map;
-    }
+
 
     @Override
     public void fillDataWithMoreEmployeeInfo(Long id, EmployeeFillInfoBindingModel employeeFillInfoBindingModel) {
@@ -104,6 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         addressRepository.save(address);
 
         employeeToUpdate
+                .setHours(hoursRepository.findHoursByHours(employeeFillInfoBindingModel.getHours()))
                 .setAddress(address)
                 .setDepartment(departmentRepository.findDepartmentByDepartment(employeeFillInfoBindingModel.getDepartment()))
                 .setPosition(positionRepository.findPositionByPosition(employeeFillInfoBindingModel.getPosition()))
@@ -116,7 +113,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeFillInfoBindingModel findByIDTEST(Long id) {
         Optional<Employee> byId = employeeRepository.findById(id);
         EmployeeFillInfoBindingModel map = modelMapper.map(byId, EmployeeFillInfoBindingModel.class);
-        System.out.println();
         return map;
     }
 
@@ -142,7 +138,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .setMobilePhone("0889461834")
                 .setPosition(positionRepository.findById(9L).orElseThrow())
                 .setDepartment(departmentRepository.findById(5L).orElseThrow())
-                .setAddress(address);
+                .setAddress(address)
+                .setHours(hoursRepository.findById(1L).orElseThrow());
         employeeRepository.save(employee);
     }
 
@@ -167,7 +164,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .setMobilePhone("0884674523")
                 .setPosition(positionRepository.findById(2L).orElseThrow())
                 .setDepartment(departmentRepository.findById(2L).orElseThrow())
-                .setAddress(address);
+                .setAddress(address)
+                .setHours(hoursRepository.findById(1L).orElseThrow());
         employeeRepository.save(employee);
     }
 
@@ -192,7 +190,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .setMobilePhone("0885458364")
                 .setPosition(positionRepository.findById(1L).orElseThrow())
                 .setDepartment(departmentRepository.findById(1L).orElseThrow())
-                .setAddress(address);
+                .setAddress(address)
+                .setHours(hoursRepository.findById(1L).orElseThrow());
         employeeRepository.save(employee);
     }
 }

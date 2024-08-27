@@ -1,6 +1,7 @@
 package com.example.employee_management_system.model.binding;
 
 import com.example.employee_management_system.model.entity.enums.DepartmentNameEnum;
+import com.example.employee_management_system.model.entity.enums.HoursNameEnum;
 import com.example.employee_management_system.model.entity.enums.LocationNameEnum;
 import com.example.employee_management_system.model.entity.enums.PositionNameEnum;
 
@@ -18,6 +19,7 @@ public class EmployeeFillInfoBindingModel {
     private String street;
     private PositionNameEnum position;
     private DepartmentNameEnum department;
+    private HoursNameEnum hours;
 
     public EmployeeFillInfoBindingModel() {
 
@@ -119,6 +121,15 @@ public class EmployeeFillInfoBindingModel {
 
     public EmployeeFillInfoBindingModel setDepartment(DepartmentNameEnum department) {
         this.department = department;
+        return this;
+    }
+
+    public HoursNameEnum getHours() {
+        return hours;
+    }
+
+    public EmployeeFillInfoBindingModel setHours(HoursNameEnum hours) {
+        this.hours = hours;
         return this;
     }
 }

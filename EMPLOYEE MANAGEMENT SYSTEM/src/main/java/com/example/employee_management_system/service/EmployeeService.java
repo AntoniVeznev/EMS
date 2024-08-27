@@ -17,9 +17,6 @@ public interface EmployeeService {
 
     List<EmptyEmployeeViewModel> nullEmployees();
 
-
-    EmployeeViewModel findEmployeeWithID(Long id);
-
     void fillDataWithMoreEmployeeInfo(Long id, EmployeeFillInfoBindingModel employeeFillInfoBindingModel);
 
     EmployeeFillInfoBindingModel findByIDTEST(Long id);

@@ -15,9 +15,15 @@ public class Employee extends BaseEntity {
     private Address address;
     private Position position;
     private Department department;
+    private Hours hours;
     private User user;
 
     public Employee() {
+    }
+
+    public Employee setHours(Hours hours) {
+        this.hours = hours;
+        return this;
     }
 
     @OneToOne
@@ -43,6 +49,11 @@ public class Employee extends BaseEntity {
     @ManyToOne
     public Department getDepartment() {
         return department;
+    }
+
+    @ManyToOne
+    public Hours getHours() {
+        return hours;
     }
 
     public Employee setDepartment(Department department) {
